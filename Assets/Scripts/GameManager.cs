@@ -8,12 +8,18 @@ public class GameManager : MonoBehaviour
     public static GameManager thisManager = null;  
     [SerializeField] private Text Txt_Score = null;
     [SerializeField] private Text Txt_Message = null;
+
     private int Score = 0;
+
+    public Transform spawnPoint;
+
+    public GameObject player;
 
     void Start()
     {
         thisManager = this;
         Time.timeScale = 0;
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Update()
@@ -30,6 +36,10 @@ public class GameManager : MonoBehaviour
 
     private void StartGame()
     {
+        player.transform.position = spawnPoint.position;
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Obstacle");
+        foreach (GameObject enemy in enemies)
+        Destroy(enemy);
         Score = 0;
         Time.timeScale = 1;
         Txt_Message.text = "";
